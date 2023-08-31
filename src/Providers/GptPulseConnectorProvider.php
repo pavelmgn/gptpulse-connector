@@ -14,6 +14,7 @@ final class GptPulseConnectorProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/gptpulse_connector.php' => config_path('gptpulse_connector.php'),
         ]);
+
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 
