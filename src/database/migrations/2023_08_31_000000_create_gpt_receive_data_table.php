@@ -8,7 +8,7 @@ class CreateGptReceiveDataTable extends Migration
 {
     public function up(): void
     {
-        Schema::table('gpt_receive_data', function (Blueprint $table) {
+        Schema::create('gpt_receive_data', function (Blueprint $table) {
             $table->id();
             $table->jsonb('data');
             $table->timestamps();
