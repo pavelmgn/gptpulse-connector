@@ -1,0 +1,38 @@
+{
+    "name": "pavelmgn/gptpulse-connector",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Pavelmgn\\GptPulseConnector\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pavelmgn\\GptPulseConnector\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pavel Sidorov",
+            "email": "pavelmgn@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "php-amqplib/php-amqplib": "^3.5"
+    },
+    "require-dev": {
+        "illuminate/support": "^9.52"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pavelmgn\\GptpulseConnector\\Providers\\GptPulseConnectorProvider"
+            ],
+            "aliases": {
+                "GptPulseConnector": "Pavelmgn\\GptpulseConnector\\Facades\\GptPulseConnectorFacade"
+            }
+        }
+    }
+}
