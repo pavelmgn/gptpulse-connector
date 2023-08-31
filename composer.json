@@ -28,10 +28,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Pavelmgn\\GptpulseConnector\\Providers\\GptPulseConnectorProvider"
+                "Pavelmgn\\GptPulseConnector\\Providers\\GptPulseConnectorProvider"
             ],
             "aliases": {
-                "GptPulseConnector": "Pavelmgn\\GptpulseConnector\\Facades\\GptPulseConnectorFacade"
+                "GptPulseConnector": "Pavelmgn\\GptPulseConnector\\Facades\\GptPulseConnectorFacade"
             }
         }
     }
