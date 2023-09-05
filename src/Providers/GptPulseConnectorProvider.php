@@ -29,7 +29,7 @@ final class GptPulseConnectorProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../config/gptpulse_connector.php',
-            'queue.connections',
+            'queue.connections.gptpulse',
         );
 
         if ($this->app->runningInConsole()) {
