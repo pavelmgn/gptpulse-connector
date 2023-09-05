@@ -7,7 +7,6 @@ namespace Pavelmgn\GptPulseConnector\Providers;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\ServiceProvider;
 use Pavelmgn\GptPulseConnector\Classes\Consumer;
-use Pavelmgn\GptPulseConnector\Classes\RabbitMqApiClient;
 use Pavelmgn\GptPulseConnector\Connectors\RabbitMQConnector;
 use Pavelmgn\GptPulseConnector\Console\ConsumeCommand;
 
@@ -22,7 +21,7 @@ final class GptPulseConnectorProvider extends ServiceProvider
         $manager = $this->app['queue'];
 
         $manager->addConnector('rabbitmq', function () {
-            return new RabbitMQConnector($this->app['events']);
+            return new RabbitMQConnector();
         });
     }
 
@@ -30,7 +29,7 @@ final class GptPulseConnectorProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../config/gptpulse_connector.php',
-            'queue.connections.gptpulse',
+            'queue.connections',
         );
 
         if ($this->app->runningInConsole()) {

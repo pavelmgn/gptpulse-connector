@@ -63,7 +63,7 @@ class RabbitMQJob extends Job implements JobContract
     {
         parent::delete();
 
-        $this->channel->basic_ack($this->message->delivery_info['delivery_tag']);
+        $this->channel->basic_ack($this->message->getDeliveryTag());
     }
 
     /**

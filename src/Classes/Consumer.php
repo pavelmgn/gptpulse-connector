@@ -6,10 +6,11 @@ namespace Pavelmgn\GptPulseConnector\Classes;
 
 use Illuminate\Queue\Worker;
 use Illuminate\Queue\WorkerOptions;
+use Pavelmgn\GptPulseConnector\Contracts\GptPulseConsumerInterface;
 use Pavelmgn\GptPulseConnector\Queues\RabbitMQQueue;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class Consumer extends Worker
+class Consumer extends Worker implements GptPulseConsumerInterface
 {
     private $channel;
 
@@ -26,7 +27,6 @@ class Consumer extends Worker
         $connection = $this->manager->connection($connectionName);
         $this->channel = $connection->getChannel();
 
-        echo 'Waiting for new message on channel:1', " \n";
         $this->channel->basic_consume(
             $queue,
             $this->consumerTag,
@@ -34,8 +34,8 @@ class Consumer extends Worker
             false,
             false,
             false,
-            function(AMQPMessage $message) use ($connection, $options, $connectionName, $queue): void {
-                echo $message->body;
+            function (AMQPMessage $message) use ($connection, $options, $connectionName, $queue): void {
+                $this->processMessage($message->body);
                 $message->ack();
             },
         );
@@ -53,5 +53,10 @@ class Consumer extends Worker
         $this->channel->basic_cancel('', false, true);
 
         return parent::stop($status, $options);
+    }
+
+    public function processMessage(string $data): void
+    {
+        echo $data;
     }
 }

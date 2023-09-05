@@ -37,15 +37,15 @@ class RabbitMqApiClient
     {
         $this->client->put($this->url . '/api/users/' . $name, [
             'headers' => ['content-type' => 'application/json'],
-            'body'    => '{"password":"' . $pass . '", "tags": "management"}',
+            'body'    => '{"password":"' . $pass . '", "tags": "none"}',
         ]);
     }
 
-    public function setPermission(string $vhost, string $user)
+    public function setPermission(string $vhost, string $user, string $writeRegexp = '.*', string $readRegexp = '.*')
     {
         $this->client->put($this->url . '/api/permissions/' . $vhost . '/' . $user, [
             'headers' => ['content-type' => 'application/json'],
-            'body'    => '{"configure":".*", "write": ".*", "read": ".*"}',
+            'body'    => '{"configure":".*", "write": "' . $writeRegexp . '", "read": "' . $readRegexp . '"}',
         ]);
     }
 }

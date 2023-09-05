@@ -79,10 +79,10 @@ class RabbitMQQueue extends Queue implements QueueContract
 
         $message = new AMQPMessage($payload, [
             'Content-Type'  => 'application/json',
-            'delivery_mode' => 1,
+            'delivery_mode' => 2,
         ]);
 
-        $this->channel->basic_publish($message, $queue, $queue);
+        $this->channel->basic_publish($message, 'gptpulse', $queue);
 
         return true;
     }
@@ -154,7 +154,7 @@ class RabbitMQQueue extends Queue implements QueueContract
         $name = $this->getQueueName($name);
 
         $this->channel->exchange_declare(
-            $name,
+            'gptpulse',
             $this->configExchange['type'],
             $this->configExchange['passive'],
             $this->configExchange['durable'],
@@ -169,7 +169,7 @@ class RabbitMQQueue extends Queue implements QueueContract
             $this->configQueue['auto_delete']
         );
 
-        $this->channel->queue_bind($name, $name, $name);
+        $this->channel->queue_bind($name, 'gptpulse', $name);
     }
 
     /**
@@ -180,12 +180,11 @@ class RabbitMQQueue extends Queue implements QueueContract
      */
     private function declareDelayedQueue($destination, $delay)
     {
-        $delay = $this->getSeconds($delay);
         $destination = $this->getQueueName($destination);
         $name = $this->getQueueName($destination) . '_deferred_' . $delay;
 
         $this->channel->exchange_declare(
-            $name,
+            'gptpulse',
             $this->configExchange['type'],
             $this->configExchange['passive'],
             $this->configExchange['durable'],
