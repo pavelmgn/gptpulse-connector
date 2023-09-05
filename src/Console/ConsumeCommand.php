@@ -40,6 +40,7 @@ final class ConsumeCommand extends WorkCommand
         /** @var Consumer $consumer */
         $consumer = $this->worker;
         $consumer->setConsumerTag($this->consumerTag());
+        $this->processData($consumer);
 
         parent::handle();
     }
@@ -57,5 +58,10 @@ final class ConsumeCommand extends WorkCommand
         ]);
 
         return Str::substr($consumerTag, 0, 255);
+    }
+
+    private function processData(Consumer $consumer): void
+    {
+        $consumer->setProcessClosure(function($data) { echo $data;});
     }
 }

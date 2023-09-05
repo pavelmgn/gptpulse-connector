@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pavelmgn\GptPulseConnector\Classes;
 
+use Closure;
 use Illuminate\Queue\Worker;
 use Illuminate\Queue\WorkerOptions;
 use Pavelmgn\GptPulseConnector\Contracts\GptPulseConsumerInterface;
@@ -16,9 +17,16 @@ class Consumer extends Worker implements GptPulseConsumerInterface
 
     protected $consumerTag;
 
+    protected Closure $process;
+
     public function setConsumerTag(string $value): void
     {
         $this->consumerTag = $value;
+    }
+
+    public function setProcessClosure(Closure $process)
+    {
+        $this->process = $process;
     }
 
     public function daemon($connectionName, $queue, WorkerOptions $options)
@@ -57,6 +65,6 @@ class Consumer extends Worker implements GptPulseConsumerInterface
 
     public function processMessage(string $data): void
     {
-        echo $data;
+        $this->process->call($this, $data);
     }
 }
