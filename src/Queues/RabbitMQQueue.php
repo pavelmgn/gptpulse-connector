@@ -149,7 +149,7 @@ class RabbitMQQueue extends Queue implements QueueContract
     /**
      * @param  string  $name
      */
-    private function declareQueue($name)
+    public function declareQueue($name)
     {
         $name = $this->getQueueName($name);
 
