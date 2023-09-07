@@ -35,6 +35,8 @@ class Consumer extends Worker implements GptPulseConsumerInterface
         $connection = $this->manager->connection($connectionName);
         $this->channel = $connection->getChannel();
 
+        $connection->declareQueue($queue);
+
         $this->channel->basic_consume(
             $queue,
             $this->consumerTag,

@@ -8,7 +8,7 @@ use Illuminate\Queue\Console\WorkCommand;
 use Illuminate\Support\Str;
 use Pavelmgn\GptPulseConnector\Classes\Consumer;
 
-final class ConsumeCommand extends WorkCommand
+class ConsumeCommand extends WorkCommand
 {
     protected $signature = 'gptpulse:consume
                             {connection? : The name of the queue connection to work}
@@ -60,7 +60,7 @@ final class ConsumeCommand extends WorkCommand
         return Str::substr($consumerTag, 0, 255);
     }
 
-    private function processData(Consumer $consumer): void
+    protected function processData(Consumer $consumer): void
     {
         $consumer->setProcessClosure(function($data) { echo $data;});
     }

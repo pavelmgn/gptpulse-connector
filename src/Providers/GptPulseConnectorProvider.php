@@ -14,10 +14,6 @@ final class GptPulseConnectorProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->publishes([
-            __DIR__ . '/../config/gptpulse_connector.php' => config_path('gptpulse_connector.php'),
-        ]);
-
         $manager = $this->app['queue'];
 
         $manager->addConnector('rabbitmq', function () {
