@@ -51,7 +51,7 @@ class RabbitMqApiClient
 
     public function getConnections(string $user)
     {
-        $this->client->get($this->url . '/api/connections/' . $user, [
+        return $this->client->get($this->url . '/api/connections/' . $user, [
             'headers' => ['content-type' => 'application/json'],
         ]);
     }
