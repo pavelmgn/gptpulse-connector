@@ -48,4 +48,11 @@ class RabbitMqApiClient
             'body'    => '{"configure":".*", "write": "' . $writeRegexp . '", "read": "' . $readRegexp . '"}',
         ]);
     }
+
+    public function getConnections(string $user)
+    {
+        $this->client->get($this->url . '/api/connections/' . $user, [
+            'headers' => ['content-type' => 'application/json'],
+        ]);
+    }
 }
